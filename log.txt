@@ -1,0 +1,44 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import User, Project, ProjectMember, Task, Comment
+from rest_framework import viewsets
+from .serializers import (
+    UserSerializer, ProjectSerializer, ProjectMemberSerializer, 
+    TaskSerializer, CommentSerializer
+)
+# Create your views here.
+def hello(request):
+    return HttpResponse("Hello, World!")
+
+#######
+
+#from rest_framework.routers import DefaultRouter
+   # We'll import our viewsets here later 
+
+   #router = DefaultRouter()
+   # We'll register our viewsets with the router here later
+
+#urlpatterns = [path('home/', include(router.urls)), ]
+
+l7%1&O9uLC~8
+
+(current authed user shall be owner, if no owner is mentioned)
+
+it only comes to my notice after writing the viewset and urls and testing  using browsable api the user creation post doesnt have field for password and login has unnesesary fields like email first_name last_name but not password
+
+
+class TView(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('jwt')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        user = User.objects.get(id=payload['user_id'])
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
